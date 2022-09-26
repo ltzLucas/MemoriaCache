@@ -1,42 +1,50 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "header.h"
-
-int main(void){
-
-    struct Bloco{
-    int indice;
-    int valido;
-    int tag;
-    int dados;
-};
-
-    struct Bloco b1;
-   
-   int tamanhoCache = 8;
-   int tamanhoBloco = 2;
-   int assosiavidade = 2;
-   int bitsOffSet = 1;
-   int bitsIndice = 1;
-
-   int cache[2][2] = 0;
-
-    
-    
-    int acess;
-    printf("Digite um valor: ");
-    scanf("%d", &acess);
-
-    acess = ConverterToBinary(acess);
-    printf("%d", acess);
-
-    return 0;
+#include "lista_int.h"
 
 
 
 
+int main(int nargs, char ** args) {
+    LISTA_BLOCO * lista = lst_criar();
+    int n;
+    for (int i = 0; i < 4; i++) {
+        lista = lst_inserir(lista, i);    
+    }
+    int dados[4];
+    int dadosProximo[4];
+    int numeros[4];
 
+    for (int i = 0; i < 4; i++) {
+        int aux;
+        printf("\nInsira dados para serem acessados na cache\n");
+        scanf("%d",&aux);
+        dados[i] = aux;
+        dadosProximo[i] = aux + 1;
+        numeros[i] = aux;
+    }
 
+    for (int i = 0; i < 4; i++) {
+        dados[i] = ConverterToBinary(dados[i]);
+        dadosProximo[i] = ConverterToBinary(dadosProximo[i]);
 
+    }
 
+    for (int i = 0; i < 4; i++) {
+
+        int offSet = getOffSet(numeros[i]);
+        int indice = getIndice(numeros[i]);
+        int tag = getTag(numeros[i]);
+        printf("Numero De entrada:%d \n",numeros[i]);
+        printf ("OffSet: %d   Indice: %d    Tag: %d\n\n",offSet,indice,tag,dados[i]);
+        printf("-----------ANTES------------\n\n");
+        lst_imprimir(lista);
+        lst_buscar(lista,indice,offSet,tag,dados[i],dadosProximo[i]);
+        system("pause");
+        printf("-----------DEPOIS------------\n\n");
+        lst_imprimir(lista);
+        system("pause");
+    }
+    lst_liberar(lista);
+    return EXIT_SUCCESS;
 }
