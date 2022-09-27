@@ -15,13 +15,13 @@ int main(int nargs, char ** args) {
     printf("Quantas buscas deseja fazer na memoria ?\n");
     scanf("%d",&Tamanhobusca);
 
-    for (int i = 0; i < Tamanhobusca; i++) {
+    for (int i = 0; i < 4; i++) {
         lista = lst_inserir(lista, i);    
     }
-    int dados[Tamanhobusca];
-    int dadosProximo[Tamanhobusca];
-    int numeros[Tamanhobusca];
-    int leitura_escrita[Tamanhobusca];
+    int dados[4];
+    int dadosProximo[4];
+    int numeros[4];
+    int leitura_escrita[4];
 
     for (int i = 0; i < Tamanhobusca; i++) {
         int aux;
@@ -63,6 +63,7 @@ int main(int nargs, char ** args) {
         printf("-----------DEPOIS-----------\n");
         lst_imprimir(lista);
         system("pause");
+        system("cls");
     }
     printf("\n-----------------------\n");
     printf("O tempo total foi de: %d",tempo);
