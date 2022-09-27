@@ -2,6 +2,16 @@
 #include <stdio.h>
 #include "lista_int.h"
 
+void printHeader(){
+    printf("+--------------------------------------------------------+\n");
+    printf("|    Seja bem vindo a simulador de memoria cache         |\n");
+    printf("+--------------------------------------------------------+\n\n");
+    printf("+--------------------------------------------------------+\n");
+    printf("| Especificacoes da cache: \n");
+    printf("| 8 Associatividade 2 TamanhoBloco 2 FIFO WB WA - \n| TC:10 TRD:200 TWD:300 \n");
+    printf("+--------------------------------------------------------+\n");
+}
+
 LISTA_BLOCO * lst_criar(void) {
     return (LISTA_BLOCO *) NULL;
 }
@@ -24,15 +34,17 @@ LISTA_BLOCO * lst_inserir(LISTA_BLOCO * lista, int dados) {
 
 void lst_imprimir(LISTA_BLOCO * lista) {
     LISTA_BLOCO * nodo = lista;
-        printf("\n------------Cache-----------\n");
+        printf("\n+-------+\n");
+        printf("| CACHE | \n");
+        printf("+-------+\n");
     while (nodo != NULL) {
-        printf("|--------------------------\n");
-        printf("|                          ");
-        printf("\n|Indice: %d                 ", nodo->indice);
-        printf("\n|Valido: %d                 ", nodo->valido);
-        printf("\n|Tag: %d                    ", nodo->tag);
-        printf("\n|Dados: %d  %d         ", nodo->dado1,nodo->dado2);
-        printf("\n|                          \n");
+        printf("+--------------------------\n");
+        printf("| ");
+        printf("\n| Indice: %d                 ", nodo->indice);
+        printf("\n| Valido: %d                 ", nodo->valido);
+        printf("\n| Tag: %d                    ", nodo->tag);
+        printf("\n| Dados: %d  %d         ", nodo->dado1,nodo->dado2);
+        printf("\n| \n");
         nodo = nodo->ptr_proximo;
     }
 }
@@ -46,21 +58,21 @@ void lst_liberar(LISTA_BLOCO * lista) {
     }
 }
 
-int lst_buscar(LISTA_BLOCO * lista, int indice,int offset,int tag,int dado,int dadoProximo,int leitura_escrita) {
+int lst_buscar(LISTA_BLOCO * lista, int indice,int tag,int dado,int dadoProximo,int leitura_escrita) {
     LISTA_BLOCO * nodo = lista;
 
     while (nodo != NULL) {
         if (nodo->indice == indice) { // achou em qual indice procura
-            if (nodo->tag == tag && nodo->dado1 == dado || nodo->dado2 == dado) {
-                printf("\n|-------|\n");
+            if ((nodo->tag == tag && nodo->dado1 == dado) || nodo->dado2 == dado) {
+                printf("\n+-------+\n");
                 printf("|  HIT  | \n");
-                printf("|-------|\n");
+                printf("+-------+\n");
                 return calculaTempo(leitura_escrita, 0);
             }
             if (nodo->valido == 0) {
-                printf("\n|----------|\n");
+                printf("\n+----------+\n");
                 printf("|   MISS   | \n");
-                printf("|----------|\n");
+                printf("+----------+\n");
                 nodo->valido = 1;
                 nodo->tag = tag;
                 nodo->dado1 = dado;
@@ -71,9 +83,9 @@ int lst_buscar(LISTA_BLOCO * lista, int indice,int offset,int tag,int dado,int d
             }
             if (nodo->valido == 1 && nodo->tempoNaCache == 0) {
 
-                printf("\n|----------|\n");
+                printf("\n+----------+\n");
                 printf("|   SUBS   | \n");
-                printf("|----------|\n");
+                printf("+----------+\n");
                 nodo->valido = 1;
                 nodo->tag = tag;
                 nodo->dado1 = dado;
@@ -177,6 +189,7 @@ int calculaTempo(int leitura_escrita,int x){
             return 10 + 20 + 30;
         }
     }
+    return EXIT_FAILURE;
 }
 
 

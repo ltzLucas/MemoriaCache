@@ -6,15 +6,15 @@
 //trd : TEmpo de leitura da DRAM                      200
 //twd : Tempo de escrita da DRAM                      300
 
-int main(int nargs, char ** args) {
+int main(void) {
     int tempo = 0;
     LISTA_BLOCO * lista = lst_criar();
-    int n;
     int Tamanhobusca;
-    printf("Seja bem vindo a simulador de memoria cache\n");
-    printf("Tamanho da cache: 8 Associatividade 2 TamanhoBloco 2 FIFO WB WA - TC:10 TRD:200 TWD:300 \n\n");
+    printHeader();
 
-    printf("Quantas buscas deseja fazer na memoria ?\n");
+    printf("+--------------------------------------------------------+\n");
+    printf("|Quantas buscas deseja fazer na memoria ?                |\n");
+    printf("+--------------------------------------------------------+\n");    
     scanf("%d",&Tamanhobusca);
 
     for (int i = 0; i < 4; i++) {
@@ -28,10 +28,15 @@ int main(int nargs, char ** args) {
     for (int i = 0; i < Tamanhobusca; i++) {
         int aux;
         int aux1;
-        printf("\nInsira dados para serem acessados na cache\n");
+        printf("+--------------------------------------------------------+\n");
+        printf("| Insira dados para serem acessados na cache:            |\n");
+        printf("+--------------------------------------------------------+\n");
         scanf("%d",&aux);
-        printf("Para esse dado vc deseja fazer uma leitura ou escrita?\n");
-        printf("[0]Leitura     [1]Escrita\n\n");
+
+        printf("+----------------------------------------------------------+\n");
+        printf("| Para esse dado vc deseja fazer uma leitura ou escrita?   |\n");
+        printf("|  [0]Leitura     [1]Escrita                               |\n");
+        printf("+----------------------------------------------------------+\n");
         scanf("%d",&aux1);                           // 0 leitura             1 escrita     
         
         dados[i] = aux;    //DADOS QUE SERAO CONVERTIDOS EM BINARIO
@@ -55,20 +60,28 @@ int main(int nargs, char ** args) {
         int tag = getTag(numeros[i]);
 
         printf("Numero De entrada:%d \n",numeros[i]);
-        printf ("OffSet: %d   Indice: %d    Tag: %d\n\n",offSet,indice,tag,dados[i]);
-        printf("-----------ANTES------------\n");
+        printf ("OffSet: %d   Indice: %d    Tag: %d\n\n",offSet,indice,tag);
+        
+        printf("+--------------------------+\n");
+        printf("|           Antes          |\n");
+        printf("+--------------------------+\n");
+
+
         lst_imprimir(lista);
-        contador = lst_buscar(lista,indice,offSet,tag,dados[i],dadosProximo[i],leitura_escrita[i]);
+        contador = lst_buscar(lista,indice,tag,dados[i],dadosProximo[i],leitura_escrita[i]);
         tempo = tempo + contador;
         system("pause");
         system("cls");
-        printf("-----------DEPOIS-----------\n");
+        printf("+--------------------------+\n");
+        printf("|          DEPOIS          |\n");
+        printf("+--------------------------+\n");
         lst_imprimir(lista);
         system("pause");
         system("cls");
     }
-    printf("\n-----------------------\n");
-    printf("O tempo total foi de: %d\n",tempo);
+    printf("+--------------------------------------------------------+\n");
+    printf("|   O tempo total foi de: %d                             |\n",tempo);
+    printf("+--------------------------------------------------------+\n");
 
     lst_liberar(lista);
     return EXIT_SUCCESS;
