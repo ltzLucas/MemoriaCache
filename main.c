@@ -32,13 +32,18 @@ int main(void) {
         printf("| Insira dados para serem acessados na cache:            |\n");
         printf("+--------------------------------------------------------+\n");
         scanf("%d",&aux);
+        int ok=0;
+        do{
+            printf("+----------------------------------------------------------+\n");
+            printf("| Para esse dado vc deseja fazer uma leitura ou escrita?   |\n");
+            printf("|  [0]Leitura     [1]Escrita                               |\n");
+            printf("+----------------------------------------------------------+\n");
+            scanf("%d",&aux1);                     // 0 leitura             1 escrita
+            if(aux1 == 0 || aux1 == 1){
+                ok = 1;
+            }
+        }while(ok == 0);
 
-        printf("+----------------------------------------------------------+\n");
-        printf("| Para esse dado vc deseja fazer uma leitura ou escrita?   |\n");
-        printf("|  [0]Leitura     [1]Escrita                               |\n");
-        printf("+----------------------------------------------------------+\n");
-        scanf("%d",&aux1);                           // 0 leitura             1 escrita     
-        
         dados[i] = aux;    //DADOS QUE SERAO CONVERTIDOS EM BINARIO
         dadosProximo[i] = aux + 1; // DADOS DOS PROXIMOS NUMEROS
         numeros[i] = aux;  //NUMERO Q O USUARIO DIGITOU
