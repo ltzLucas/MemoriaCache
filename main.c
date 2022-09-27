@@ -8,14 +8,19 @@
 int main(int nargs, char ** args) {
     LISTA_BLOCO * lista = lst_criar();
     int n;
-    for (int i = 0; i < 4; i++) {
+    int Tamanhobusca;
+    printf("Quantas buscas deseja fazer na memoria ?\n");
+    scanf("%d",&Tamanhobusca);
+
+
+    for (int i = 0; i < Tamanhobusca; i++) {
         lista = lst_inserir(lista, i);    
     }
-    int dados[4];
-    int dadosProximo[4];
-    int numeros[4];
+    int dados[Tamanhobusca];
+    int dadosProximo[Tamanhobusca];
+    int numeros[Tamanhobusca];
 
-    for (int i = 0; i < 4; i++) {
+    for (int i = 0; i < Tamanhobusca; i++) {
         int aux;
         printf("\nInsira dados para serem acessados na cache\n");
         scanf("%d",&aux);
@@ -24,13 +29,13 @@ int main(int nargs, char ** args) {
         numeros[i] = aux;
     }
 
-    for (int i = 0; i < 4; i++) {
+    for (int i = 0; i < Tamanhobusca; i++) {
         dados[i] = ConverterToBinary(dados[i]);
         dadosProximo[i] = ConverterToBinary(dadosProximo[i]);
 
     }
 
-    for (int i = 0; i < 4; i++) {
+    for (int i = 0; i < Tamanhobusca; i++) {
 
         int offSet = getOffSet(numeros[i]);
         int indice = getIndice(numeros[i]);
