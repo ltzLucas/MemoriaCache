@@ -67,7 +67,6 @@ int lst_buscar(LISTA_BLOCO * lista, int indice,int offset,int tag,int dado,int d
                 nodo->dado2 = dadoProximo;
                 nodo->tempoNaCache = 1;
                 atribuir_zero(lista,nodo->id);
-
                 return calculaTempo(leitura_escrita, 1);
             }
             if (nodo->valido == 1 && nodo->tempoNaCache == 0) {

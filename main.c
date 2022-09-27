@@ -3,14 +3,16 @@
 #include "lista_int.h"
 
 //tc : Tempo de acesso à cache                        10
-//trd : TEmpo de leitura da DRAM                      20
-//twd : Tempo de escrita da DRAM                      30
+//trd : TEmpo de leitura da DRAM                      200
+//twd : Tempo de escrita da DRAM                      300
 
 int main(int nargs, char ** args) {
     int tempo = 0;
     LISTA_BLOCO * lista = lst_criar();
     int n;
     int Tamanhobusca;
+    printf("Seja bem vindo a simulador de memoria cache\n");
+    printf("Tamanho da cache: 8 Associatividade 2 TamanhoBloco 2 FIFO WB WA - TC:10 TRD:200 TWD:300 \n\n");
 
     printf("Quantas buscas deseja fazer na memoria ?\n");
     scanf("%d",&Tamanhobusca);
@@ -66,7 +68,7 @@ int main(int nargs, char ** args) {
         system("cls");
     }
     printf("\n-----------------------\n");
-    printf("O tempo total foi de: %d",tempo);
+    printf("O tempo total foi de: %d\n",tempo);
 
     lst_liberar(lista);
     return EXIT_SUCCESS;
