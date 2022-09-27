@@ -24,14 +24,15 @@ LISTA_BLOCO * lst_inserir(LISTA_BLOCO * lista, int dados) {
 
 void lst_imprimir(LISTA_BLOCO * lista) {
     LISTA_BLOCO * nodo = lista;
-        printf("\n-------------------Cache-------------------\n");
+        printf("\n------------Cache-----------\n");
     while (nodo != NULL) {
-        printf("--------------------------\n");
-        printf("\nId: %d",nodo->id);
-        printf("\nIndice: %d", nodo->indice);
-        printf("\nValido: %d", nodo->valido);
-        printf("\nTag: %d", nodo->tag);
-        printf("\nDados: %d  %d\n", nodo->dado1,nodo->dado2);
+        printf("|--------------------------\n");
+        printf("|                          ");
+        printf("\n|Indice: %d                 ", nodo->indice);
+        printf("\n|Valido: %d                 ", nodo->valido);
+        printf("\n|Tag: %d                    ", nodo->tag);
+        printf("\n|Dados: %d  %d         ", nodo->dado1,nodo->dado2);
+        printf("\n|                          \n");
         nodo = nodo->ptr_proximo;
     }
 }
@@ -45,36 +46,43 @@ void lst_liberar(LISTA_BLOCO * lista) {
     }
 }
 
-LISTA_BLOCO * lst_buscar(LISTA_BLOCO * lista, int indice,int offset,int tag,int dado,int dadoProximo) {
+int lst_buscar(LISTA_BLOCO * lista, int indice,int offset,int tag,int dado,int dadoProximo,int leitura_escrita) {
     LISTA_BLOCO * nodo = lista;
 
     while (nodo != NULL) {
         if (nodo->indice == indice) { // achou em qual indice procura
             if (nodo->tag == tag && nodo->dado1 == dado || nodo->dado2 == dado) {
-                printf("\nDEU HIT\n");
-                return NULL;
+                printf("\n|-------|\n");
+                printf("|  HIT  | \n");
+                printf("|-------|\n");
+                return calculaTempo(leitura_escrita, 0);
             }
             if (nodo->valido == 0) {
-                printf("DEU MISS\n");
+                printf("\n|----------|\n");
+                printf("|   MISS   | \n");
+                printf("|----------|\n");
                 nodo->valido = 1;
                 nodo->tag = tag;
                 nodo->dado1 = dado;
                 nodo->dado2 = dadoProximo;
                 nodo->tempoNaCache = 1;
                 atribuir_zero(lista,nodo->id);
-                return nodo;
+
+                return calculaTempo(leitura_escrita, 1);
             }
             if (nodo->valido == 1 && nodo->tempoNaCache == 0) {
-                printf("SUBSTITUIU\n");
+
+                printf("\n|----------|\n");
+                printf("|   SUBS   | \n");
+                printf("|----------|\n");
                 nodo->valido = 1;
                 nodo->tag = tag;
                 nodo->dado1 = dado;
                 nodo->dado2 = dadoProximo;
                 nodo->tempoNaCache = 1;
                 atribuir_zero(lista,nodo->id);
-                return nodo;
+                return calculaTempo(leitura_escrita, 1);;
             }
-            
         }
         nodo = nodo->ptr_proximo;
     }
@@ -99,8 +107,6 @@ LISTA_BLOCO * atribuir_zero(LISTA_BLOCO * lista,int id) {
     return NULL;
 
 }
-
-
 
 int ConverterToBinary (int n){
     int bin=0;
@@ -128,7 +134,6 @@ int getIndice(int n){
     }
     return 0;    
 }
-
 int getTag(int n){
     int tag1,tag2,tag3,tag4;
     int concatenacao;
@@ -160,6 +165,19 @@ int getTag(int n){
     concatenacao = (tag4*10 + tag3);
     concatenacao = (concatenacao * 10) + tag2;
     return concatenacao = (concatenacao * 10) + tag1;
+}
+
+int calculaTempo(int leitura_escrita,int x){
+    if (x == 0) {          // SE X == 0 faz o  calculo de HIT
+        return 10;         
+    } else if(x == 1) {    // SE X == 1 faz o calcula de MISS
+
+        if (leitura_escrita == 0 ) {    // 0 significa LEITURA
+            return 10 + 20;
+        }else {                         // ESCRITA
+            return 10 + 20 + 30;
+        }
+    }
 }
 
 
